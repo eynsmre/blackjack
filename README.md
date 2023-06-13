@@ -2,7 +2,7 @@ Game Rules:
 
 Blackjack is a card game where the goal is to have a hand value as close to 21 as possible without exceeding it. The game is played between a player and a computer dealer.
 
-The player starts with 200 TL (Turkish Lira) and can place bets.
+The player starts with 200 PLN and can place bets.
 The player can choose to "Push" (get another card), "Wait" (end their turn), or "Double it" (double their bet and get one more card).
 The computer dealer must have a hand value of at least 17.
 The player and computer are initially dealt two cards each.
@@ -12,7 +12,10 @@ If the player's hand value exceeds 21, they lose the bet. If the computer's hand
 If the player and computer have the same hand value, it is a tie.
 If the player's hand value is higher than the computer's hand value, the player wins the bet. Otherwise, the player loses the bet.
 The game continues until the player runs out of money or chooses to exit the game.
-Explanation of the Code:
+
+
+
+<h2>Explanation of the Code:<h2>
 
 The code is written in Java and implements a simplified version of the Blackjack game. Let's go through the important parts of the code:
 
