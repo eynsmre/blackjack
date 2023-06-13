@@ -1,4 +1,4 @@
-Game Rules:
+<h2>Game Rules:</h2>
 
 Blackjack is a card game where the goal is to have a hand value as close to 21 as possible without exceeding it. The game is played between a player and a computer dealer.
 
