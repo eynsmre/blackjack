@@ -15,7 +15,7 @@ The game continues until the player runs out of money or chooses to exit the gam
 
 
 
-<h2>Explanation of the Code:<h2>
+<h2>Explanation of the Code:</h2>
 
 The code is written in Java and implements a simplified version of the Blackjack game. Let's go through the important parts of the code:
 
