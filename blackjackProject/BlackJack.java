@@ -1,8 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class BlackJack {
+public class BlackJack extends Player{
 
+  public BlackJack() {
+    super(); // Call the superclass constructor
+  }
+  
   public static void main(String[] args) {
 
     boolean gameInProgress = true;
@@ -11,6 +15,10 @@ public class BlackJack {
     UIManager.put("OptionPane.background", Color.decode("#0f1f07"));
     UIManager.put("OptionPane.messageForeground", Color.WHITE);
 
+    Player computer = new Player();
+    Player player = new Player();
+
+    /*
     int computerScore;
     String computerMessage;
     JPanel computerPanel = new JPanel();
@@ -24,6 +32,8 @@ public class BlackJack {
     JPanel playerPanel = new JPanel();
     boolean playerPlaying;
     boolean playerAce = false;
+
+     */
 
     int cardNo, cardValue;
     String statusMessage = "";
@@ -39,14 +49,14 @@ public class BlackJack {
                   + "Whoever gets 21 wins\n"
                   + "The one with the cards closest to a total of 21 wins.\n"
                   + "The computer's cards must have a total of at least 17.\n"
-                  + "<html><h2>You currently have " + playerMoney + " PLN.</h2></html>"
+                  + "<html><h2>You currently have " + player.getMoney() + " PLN.</h2></html>"
                   + "<html><h1>Please specify your bet!!!</html></h1>",
               "Bet Value",
               JOptionPane.PLAIN_MESSAGE,
               new ImageIcon(BlackJack.class.getResource("resimler/blackjack.png")),
               null, "");
-          bet = Integer.parseInt(betAmount.toString());
-          if (bet > playerMoney) {
+          player.setBet(Integer.parseInt(betAmount.toString()));
+          if (player.getBet() > player.getMoney()) {
             JOptionPane.showMessageDialog(null,
                 "<html><h2>You don't have enough money! </h2></html>",
                 "WRONG VALUE",
@@ -68,11 +78,11 @@ public class BlackJack {
           System.exit(0);
         }
       } while (betError);
-      System.out.println("Bet = " + bet);
-      statusMessage = "Bet = " + bet + "\nYour money = " + playerMoney;
+      System.out.println("Bet = " + player.getBet());
+      statusMessage = "Bet = " + player.getBet() + "\nYour money = " + player.getMoney();
 
-      computerScore = 0;
-      computerPlaying = true;
+      computer.setScore(0);
+      //computerPlaying = true; //Zaten Player class içerisinde true halde
       // Bilgisayar 1. kart çekiliyor
       cardNo = (int) (Math.random() * 52) + 1;
       System.out.print("Computer\tcard value = " + cardNo + "\t");
@@ -82,7 +92,7 @@ public class BlackJack {
           break; // K geldi cardValue = 10
         case 1:
           cardValue = 11;
-          computerAce = true;
+          computer.setHasAce(true);
           break; // AS geldi cardValue = 11
         case 11:
         case 12:
@@ -93,26 +103,28 @@ public class BlackJack {
           break;
       }
       System.out.print("Card Point  = " + cardValue + "\t");
-      computerScore += cardValue;
-      computerPanel.add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
-      System.out.println("Total point  = " + computerScore);
+      computer.setScore(computer.getScore() + cardValue);
+      computer.getPanel().add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
+      System.out.println("Total point  = " + computer.getScore());
       // Bilgisayar 2. kağıt kapalı gösterilir.
       JLabel closedCard = new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k0.png")));
-      computerPanel.add(closedCard);
-      computerMessage = "Computer = " + computerScore + " score";
+      computer.getPanel().add(closedCard);
+      computer.setMessage("Computer = " + computer.getScore() + " score");
 
-      playerScore = 0;
-      playerPlaying = true;
+      player.setScore(0);
+      player.setPlaying(true);
+
       // Oyuncu 1. kart
       cardNo = (int) (Math.random() * 52) + 1;
       System.out.print("Player\tcard number = " + cardNo + "\t");
+      /*
       switch (cardNo % 13) {
         case 0:
           cardValue = 10;
           break; // K geldi cardValue = 10
         case 1:
           cardValue = 11;
-          computerAce = true;
+          computer.setHasAce(true);
           break; // AS geldi cardValue = 11
         case 11:
         case 12:
@@ -122,21 +134,25 @@ public class BlackJack {
           cardValue = cardNo % 13;
           break;
       }
+
+       */
+      player.addCard(cardNo);
       System.out.print("Card value = " + cardValue + "\t");
-      playerScore += cardValue;
-      playerPanel.add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
-      System.out.println("Total value  = " + playerScore);
+      //player.setScore(player.getScore() + cardValue);
+      //player.getPanel().add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
+      System.out.println("Total value  = " + player.getScore());
 
       // Oyuncu 2. kart
       cardNo = (int) (Math.random() * 52) + 1;
       System.out.print("Player\tcard value= " + cardNo + "\t");
+      /*
       switch (cardNo % 13) {
         case 0:
           cardValue = 10;
           break; // K geldi cardValue = 10
         case 1:
           cardValue = 11;
-          computerAce = true;
+          computer.setHasAce(true);
           break; // AS geldi cardValue = 11
         case 11:
         case 12:
@@ -146,42 +162,43 @@ public class BlackJack {
           cardValue = cardNo % 13;
           break;
       }
+       */
       System.out.print("Card value = " + cardValue + "\t");
-      playerScore += cardValue;
-      playerPanel.add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
-      System.out.println("Total score  = " + playerScore);
-      playerMessage = "Player = " + playerScore + " score";
+      player.setScore(player.getScore() + cardValue);
+      player.getPanel().add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
+      System.out.println("Total score  = " + player.getScore());
+      player.setMessage("Player = " + player.getScore() + " score");
 
-      if (playerScore == 21)
-        bet *= 1.5;
+      if (player.getScore() == 21)
+        player.setBet((player.getBet() * 1.5));
 
-      if (playerScore >= 21) { // oyuncu bitirdi kart çekmeye gerek yok
-        playerPlaying = false;
-        computerPlaying = false;
+      if (player.getScore() >= 21) { // oyuncu bitirdi kart çekmeye gerek yok
+        player.setPlaying(false);
+        computer.setPlaying(false);
       }
-      while (playerPlaying) {
-        gamePanel[0] = computerMessage;
-        gamePanel[1] = computerPanel;
+      while (player.isPlaying()) {
+        gamePanel[0] = computer.getMessage();
+        gamePanel[1] = computer.getPanel();
         gamePanel[2] = statusMessage;
-        gamePanel[3] = playerPanel;
-        gamePanel[4] = playerMessage;
+        gamePanel[3] = player.getPanel();
+        gamePanel[4] = player.getMessage();
         int cardChoice = JOptionPane.showOptionDialog(null, gamePanel, "BlackJack Game",
             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
             new ImageIcon(BlackJack.class.getResource("resimler/blackjack.png")),
             gameOptions, gameOptions[0]);
         if (cardChoice == 1) { // BEKLE seçildi cardNo almaz
-          playerPlaying = false;
+          player.setPlaying(false);
         } else {
           if (cardChoice == 2) {
-            if (playerMoney < bet * 2) {
+            if (player.getMoney() < player.getBet() * 2) {
               JOptionPane.showMessageDialog(null,
                   "<html><h2>You don't have enough money to double your bet!</h2></html>",
                   "Insufficient Funds",
                   JOptionPane.ERROR_MESSAGE);
               continue;
             }
-            bet *= 2;
-            playerPlaying = false;
+            player.setBet(player.getBet() * 2);
+            player.setPlaying(false);
           }
           // Oyuncu Yeni kart
           cardNo = (int) (Math.random() * 52) + 1;
@@ -190,9 +207,9 @@ public class BlackJack {
               cardValue = 10;
               break; // K geldi cardValue = 10
             case 1:
-              if (playerScore <= 10) {
+              if (player.getScore() <= 10) {
                 cardValue = 11;
-                computerAce = true;
+                computer.setHasAce(true);
               } else {
                 cardValue = 1;
               }
@@ -206,25 +223,25 @@ public class BlackJack {
               break;
           }
           System.out.print("Player\tcard value = " + cardNo + "\tcard point = " + cardValue + "\t");
-          playerScore += cardValue;
-          playerPanel.add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
-          if (playerAce && playerScore > 21) { // oyuncuda AS var ama puanı 21'den büyük. AS=1 sayılır
-            playerScore -= 10;
-            playerAce = false;
+          player.setScore(player.getScore()+ cardValue);
+          player.getPanel().add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
+          if (player.hasAce() && player.getScore() > 21) { // oyuncuda AS var ama puanı 21'den büyük. AS=1 sayılır
+            player.setScore(player.getScore() - 10);
+            player.setHasAce(false);
           }
-          System.out.println("Total score  = " + playerScore);
-          playerMessage = "Player = " + playerScore + " score";
+          System.out.println("Total score  = " + player.getScore());
+          player.setMessage("Player = " + player.getScore() + " score");
         } // oyuncu AS kontrolü bitti
-        if (playerScore >= 21) {
-          playerPlaying = false;
-          computerPlaying = false;
+        if (player.getScore() >= 21) {
+          player.setPlaying(false);
+          computer.setPlaying(false);
         }
       } // oyuncu aşaması bitti
 
       // bilgisayar oynamaya başladı. Kapalı kağıtı kaldıralım
-      computerPanel.remove(closedCard);
-      while (computerPlaying) {
-        if (computerScore < 17) {
+      computer.getPanel().remove(closedCard);
+      while (betError) {
+        if (computer.getScore() < 17) {
           // bilgisayar yeni kart
           cardNo = (int) (Math.random() * 52) + 1;
           switch (cardNo % 13) {
@@ -232,9 +249,9 @@ public class BlackJack {
               cardValue = 10;
               break; // K geldi cardValue = 10
             case 1:
-              if (playerScore <= 10) {
+              if (computer.getScore() <= 10) {
                 cardValue = 11;
-                computerAce = true;
+                computer.setHasAce(true);
               } else {
                 cardValue = 1;
               }
@@ -248,50 +265,50 @@ public class BlackJack {
               break; //
           }
           System.out.print("Computer\tcard value = " + cardNo + "\tCard value = " + cardValue + "\t");
-          computerScore += cardValue;
-          computerPanel.add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
-          if (computerAce && computerScore > 21) { // bilgisayarda AS var ama puanı 21'den büyük. AS=1 sayılır
-            computerScore -= 10;
-            computerAce = false;
+          computer.setScore(computer.getScore() + cardValue);
+          computer.getPanel().add(new JLabel(new ImageIcon(BlackJack.class.getResource("resimler/k" + cardNo + ".png"))));
+          if (computer.hasAce() && computer.getScore() > 21) { // bilgisayarda AS var ama puanı 21'den büyük. AS=1 sayılır
+            computer.setScore(computer.getScore() - 10);
+            computer.setHasAce(false);
           }
-          System.out.println("Total Score = " + computerScore);
-          computerMessage = "Computer = " + computerScore + " score";
+          System.out.println("Total Score = " + computer.getScore());
+          computer.setMessage("Computer = " + computer.getScore() + " score");
         } else {
-          computerPlaying = false;
+          betError = false;
         }
       } // bilgisayar bitirdi
       // Durum Kontrol
       String status;
-      if (playerScore == 21 || computerScore > 21) {
-        playerMoney += bet;
+      if (player.getScore() == 21 || computer.getScore() > 21) {
+        player.setMoney(player.getMoney() + player.getBet());
         status = "YOU WIN";
-      } else if (playerScore > 21 || computerScore == 21) {
-        playerMoney -= bet;
+      } else if (player.getScore() > 21 || computer.getScore() == 21) {
+        player.setMoney(player.getMoney() - player.getBet());
         status = "YOU LOSE";
-      } else if (playerScore == computerScore) {
+      } else if (player.getScore() == computer.getScore()) {
         status = "IT'S A TIE";
       } else {
-        if (playerScore < computerScore) {
-          playerMoney -= bet;
+        if (player.getScore() < computer.getScore()) {
+          player.setMoney(player.getMoney() + player.getBet());
           status = "YOU LOSE";
         } else {
-          playerMoney += bet;
+          player.setMoney(player.getMoney() + player.getBet());
           status = "YOU WIN";
         }
       }
-      statusMessage = "Bet = " + bet + "\n<html><h1>!!! " + status + " !!!</h1></html>\nYour money = " + playerMoney;
-      gamePanel[0] = computerMessage;
-      gamePanel[1] = computerPanel;
+      statusMessage = "Bet = " + player.getBet() + "\n<html><h1>!!! " + status + " !!!</h1></html>\nYour money = " + player.getMoney();
+      gamePanel[0] = computer.getMessage();
+      gamePanel[1] = computer.getPanel();
       gamePanel[2] = statusMessage;
-      gamePanel[3] = playerPanel;
-      gamePanel[4] = playerMessage;
+      gamePanel[3] = player.getPanel();
+      gamePanel[4] = player.getMessage();
       JOptionPane.showMessageDialog(null, gamePanel, "SKOR", JOptionPane.ERROR_MESSAGE,
           new ImageIcon(BlackJack.class.getResource("resimler/blackjack.png")));
-      computerPanel.removeAll();
-      playerPanel.removeAll();
-      if (playerMoney <= 0) { // en küçük bahisten daha az para varsa
+      computer.getPanel().removeAll();
+      player.getPanel().removeAll();
+      if (player.getMoney() <= 0) { // en küçük bahisten daha az para varsa
         statusMessage = "<html><h2>You don't have enough money</h2></html>"
-            + "\n<html><h1>Your money =" + playerMoney + " PLN</h1></html>";
+            + "\n<html><h1>Your money =" + player.getMoney() + " PLN</h1></html>";
         gameInProgress = false;
       }
     } while (gameInProgress);
@@ -308,7 +325,7 @@ public class BlackJack {
         statusMessage, "Game over !",
         JOptionPane.ERROR_MESSAGE,
         new ImageIcon(
-            originalIcon.getImage().getScaledInstance(desiredWidth, desiredHeight, java.awt.Image.SCALE_SMOOTH)));
+            originalIcon.getImage().getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH)));
 
   }
 }
