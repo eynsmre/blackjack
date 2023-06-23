@@ -1,46 +1,32 @@
-<h2>Game Rules:</h2>
+<h2>Project Report: BlackJack Game</h2>
 
-Blackjack is a card game where the goal is to have a hand value as close to 21 as possible without exceeding it. The game is played between a player and a computer dealer.
+<h3>1. Introduction</h3>
+The BlackJack project is a Java program that implements a simple text-based version of the popular card game Blackjack. The program allows a player to play against a computer dealer and place bets on each round. The goal of the game is to get a hand value as close to 21 as possible without exceeding it, while also beating the dealer's hand.
 
-The player starts with 200 PLN and can place bets.
-The player can choose to "Push" (get another card), "Wait" (end their turn), or "Double it" (double their bet and get one more card).
-The computer dealer must have a hand value of at least 17.
-The player and computer are initially dealt two cards each.
-The face cards (King, Queen, Jack) are worth 10 points, and the Ace can be worth 1 or 11 points.
-If the player or computer has an Ace and their hand value exceeds 21, the Ace is counted as 1 point.
-If the player's hand value exceeds 21, they lose the bet. If the computer's hand value exceeds 21, the player wins the bet.
-If the player and computer have the same hand value, it is a tie.
-If the player's hand value is higher than the computer's hand value, the player wins the bet. Otherwise, the player loses the bet.
-The game continues until the player runs out of money or chooses to exit the game.
+<h3>2. Program Structure</h3>
+The program consists of two main classes: `BlackJack` and `Player`. The `BlackJack` class contains the main method and handles the game logic, while the `Player` class represents a player in the game.
 
+<h3>3. Game Flow</h3>
+The game follows a typical flow for a game of Blackjack. Here are the main steps:
 
+- The game starts by initializing the necessary variables and components, such as the players (computer and human), the game options, and the UI settings.
+- The main game loop begins, allowing the player to place bets and play multiple rounds until they run out of money or choose to quit.
+- The player is prompted to enter their bet amount, which is validated against their available money. Invalid inputs are handled with appropriate error messages.
+- The game proceeds with dealing the initial cards to the player and the computer. The player starts with two cards, and the computer starts with one visible card and one hidden card.
+- If the player's initial score is 21 (a blackjack), he earns 1.5 times his money back.
+- The player's turn begins, where they are presented with options to hit (draw another card), stand (end their turn), or double (double their bet and draw one more card). Input validation is performed to ensure the player has enough money to double their bet.
+- After the player finishes their turn, the computer's turn begins. The computer continues drawing cards until its score reaches at least 17.
+- The final scores of both the player and the computer are compared to determine the game outcome (win, lose, or tie). The player's money is updated accordingly.
+- The game status, including the scores, bet amount, and remaining money, is displayed to the player.
+- The player's and computer's panels are cleared for the next round.
+- If the player's money is depleted, the game ends. Otherwise, the next round starts.
+- When the game ends, a game over message is displayed, showing the final status and an image.
 
-<h2>Explanation of the Code:</h2>
+<h3>4. Player Class</h3>
+The `Player` class represents a player in the game. It has attributes such as `money` (amount of money available), `bet` (current bet amount), `score` (current hand score), `message` (player-specific message), `panel` (UI panel for displaying cards), and `playing` (flag indicating if the player is currently playing). It also has methods for adding a card to the player's hand and handling Ace cards.
 
-The code is written in Java and implements a simplified version of the Blackjack game. Let's go through the important parts of the code:
+<h3>5. User Interface</h3>
+The game utilizes Java's `JOptionPane` for creating dialog boxes to interact with the player. The UI settings are customized by modifying the UIManager properties to set background colors and image icons.
 
-Import Statements:
-
-The code imports necessary classes and packages for GUI components and color management.
-Class Definition:
-
-The code defines a class named "BlackJack."
-main() Method:
-
-The main() method is the entry point of the program.
-It initializes variables and objects required for the game, such as gameInProgress, gameOptions, computerScore, playerMoney, etc.
-It contains a do-while loop that represents the main game loop. The loop continues as long as the game is in progress.
-Within the loop, the code prompts the player to place a bet and handles input validation for the bet amount.
-It simulates the dealing of cards to the player and the computer dealer, calculates their scores, and updates the GUI accordingly.
-It provides options for the player to choose their next move (push, wait, or double their bet) using JOptionPane dialogs.
-It simulates the computer dealer's turn by drawing cards until its score reaches at least 17.
-It evaluates the final scores, determines the outcome (win, lose, or tie), updates the player's money, and displays the result using a GUI dialog.
-It clears the card panels and checks if the player has enough money to continue playing. If not, it ends the game.
-The main game loop continues until the player decides to exit the game or runs out of money.
-Finally, it displays a final game message using a GUI dialog.
-Card Drawing and GUI:
-
-The code uses ImageIcon and JLabel to represent and display card images.
-It utilizes JOptionPane dialogs to interact with the player, display game information, and show the final results.
-It uses UIManager to customize the look and feel of the dialogs by setting background colors and message foreground color.
-Overall, the code provides a simple command-line version of the Blackjack game, allowing the player to place bets, make decisions, and play against a computer dealer. It utilizes GUI dialogs to enhance the user experience and visual representation of the game.
+<h3>6. Conclusion</h3>
+The BlackJack project provides a functional implementation of a simple Blackjack game in Java. Players can enjoy playing against a computer dealer, placing bets, and experiencing the thrill of trying to get as close to 21 as possible. The program demonstrates object-oriented programming concepts, user input validation, and graphical user interface components. Further enhancements and refinements can be made to improve the game's user experience and add additional features.
