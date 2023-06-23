@@ -1,3 +1,6 @@
+<h1>This game created by Yunus Emre Erkeles and Enes Gokden</h1>
+
+
 <h2>Project Report: BlackJack Game</h2>
 
 <h3>1. Introduction</h3>
